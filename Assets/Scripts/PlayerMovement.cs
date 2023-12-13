@@ -7,7 +7,12 @@ public class PlayerMovement : MonoBehaviour
 
     private CharacterController controller;
 
-    public float speed = 12f;
+    public float currentSpeed;
+    public float walkingSpeed = 5f; //walking speed
+    public float runningSpeed = 12f; //running speed
+
+
+
     public float gravity = -9.81f * 2;
     public float jumpHeight = 3f;
 
@@ -25,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        currentSpeed = walkingSpeed;
     }
 
     
@@ -46,7 +52,16 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * X + transform.forward * Z; //(right - red axis, forward - blue axis)
 
         // Moving the player
-        controller.Move(move * speed * Time.deltaTime);
+        controller.Move(move * currentSpeed * Time.deltaTime);
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        { //makes the running speed active
+            currentSpeed = runningSpeed;
+        }
+        else
+        {
+            currentSpeed = walkingSpeed; // goes back to walking mode
+        }
 
         // Checking if the player van jump
         if (Input.GetButtonDown("Jump") && isGrounded)
