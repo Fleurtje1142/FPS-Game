@@ -32,7 +32,13 @@ public class Weapon : MonoBehaviour
     public int magazineSize, bulletsLeft;
     public bool isReloading;
 
-    
+    public enum WeaponModel
+    {
+        Pistol1911,
+        M4
+    }
+
+    public WeaponModel thisWeaponModel;
 
     public enum ShootingMode
     {
@@ -55,6 +61,7 @@ public class Weapon : MonoBehaviour
 
     void Update()
     {
+        // Empty magazine sound
         if (bulletsLeft == 0 && isShooting)
         {
             SoundManager.Instance.emptyMagazineSoundM1911.Play();
@@ -107,7 +114,8 @@ public class Weapon : MonoBehaviour
         muzzleEffect.GetComponent<ParticleSystem>().Play();
         animator.SetTrigger("RECOIL");
 
-        SoundManager.Instance.shootingsSoundM1911.Play();
+        SoundManager.Instance.PlayShootingSound(thisWeaponModel);
+        
 
         readyToShoot = false;
 
@@ -142,7 +150,10 @@ public class Weapon : MonoBehaviour
 
     private void Reload()
     {
-        SoundManager.Instance.reloadingSoundM1911.Play();
+        
+        SoundManager.Instance.PlayReloadingSound(thisWeaponModel);
+
+        animator.SetTrigger("RELOAD");
 
         isReloading = true;
         Invoke("ReloadCompleted", reloadTime);
