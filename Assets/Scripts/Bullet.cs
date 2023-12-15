@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public int bulletDamage;
+
+
     private void OnCollisionEnter(Collision objectWeHit)
     {
         if (objectWeHit.gameObject.CompareTag("Target"))
@@ -32,6 +35,13 @@ public class Bullet : MonoBehaviour
             // We will not destroy the bullet on impact, it will get destroyed according to its lifetime.
         }
 
+        if (objectWeHit.gameObject.CompareTag("Zombie"))
+        {
+            
+            objectWeHit.gameObject.GetComponent<Zombie>().TakeDamage(bulletDamage);
+
+            Destroy(gameObject);
+        }
     }
 
     void CreateBulletImpactEffect(Collision objectWeHit)
