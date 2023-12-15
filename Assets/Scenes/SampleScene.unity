@@ -6794,6 +6794,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9afd9fbfe541b884a9f944396b4799a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  optionsMenu: {fileID: 1103185452}
+  paused: 0
   mouseSensitivity: 500
   topClamp: -90
   bottomClamp: 90
