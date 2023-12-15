@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Zombie : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     [SerializeField] private int HP = 100;
     private Animator animator;
@@ -41,15 +41,16 @@ public class Zombie : MonoBehaviour
         }
     }
 
-    public void Update()
+    private void OnDrawGizmos()
     {
-        if(navAgent.velocity.magnitude > 0.1f)
-        {
-            animator.SetBool("isWalking", true);
-        }
-        else
-        {
-            animator.SetBool("isWalking", false);
-        }
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 2.5f); //Attacking // stop attacking
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, 18f); //detection (Start chasing)
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, 21f); //Stop chasing
     }
+
 }
